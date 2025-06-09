@@ -27,7 +27,7 @@ void funkcija(int *niza, int n) {
         suma += niza[0];
     }
 
-    pecati_filtrirani(niza + 1, n - 1);
+    funkcija(niza + 1, n - 1);
 }*/
 int funkcija(int *niza, int *n) {
     int i, j = 0, suma = 0;
