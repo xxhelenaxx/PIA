@@ -373,3 +373,187 @@ int main () {
     return 0;
 }
 
+/******************************************************************************
+7.	Да се напише програма која ќе дозволи внесување на димензиите на една матрица (од
+тастатура), a потоа (исто така од тастатура) ќе овозможи да се внесуваат елементите на матрицата
+(цели броеви). Програмата треба, за секоја редица од матрицата, да провери дали има дупликат
+редица т.е. редица со ист редослед и исти вредности на елементите. Доколку најде една (или
+повеќе) такви редици во матрицата, тогаш на првата дупликат редица елементите и се
+зголемуваат за вредност 1, на втората дупликат редица (од истата оригинална редица) елементите
+се зголемуваат за вредност 2 и т.н. По изминување на матрицата, се печати бројот на редици што
+биле трансформирани и се печати матрицата по трансофрмација. Доколку немало ниту една
+промена, тогаш не се печати новата верзија на матрицата.
+_А=
+_ _ _ _ _
+1 2 10 0
+7 2 3 1
+1 2 10 0
+7 2 3 1
+1 2 10 0_
+_
+_
+_
+_
+Х = 3 
+по трансформација
+А =
+_ _ _ _ _
+1 2 10 0
+7 2 3 1
+2 3 11 1
+8 3 4 2
+3 4 12 2_
+
+
+*******************************************************************************/
+#include <stdio.h>
+#define MAX 100
+
+int main() {
+    int a[MAX][MAX], n, m;
+    int i, k, l;
+    int dvojnici[MAX] = {0};
+    int promeneti = 0;
+
+    // Внес на димензии
+    printf("Vnesi broj na redovi: ");
+    scanf("%d", &n);
+    printf("Vnesi broj na koloni: ");
+    scanf("%d", &m);
+
+    // Внес на елементите
+    printf("Vnesi elementi:\n");
+    for (i = 0; i < n; i++) {
+        for (k = 0; k < m; k++) {
+            scanf("%d", &a[i][k]);
+        }
+    }
+
+    for (i = 0; i < n - 1; i++) { //pochnuva da go sporeduva prviot red so ostanatite, pa vtoriot..itn se do pretposledniot
+        for (int red = i + 1; red < n; red++) { //pochnuva od naredniot red i odi do posledniot
+            int isti = 1;//pretpostavuvame deka se isti
+            for (k = 0; k < m; k++) { //odime posekoj element po kolona od toj red
+                if (a[i][k] != a[red][k]) { //ako elementot od redicata i ne e ednakov od drugata redica red
+                    isti = 0; //znachi ne se isti
+                    break;//izleguvame od ciklusot bidejkji nema potreba da prodolzhime da gi sporeduvame ostanatite el od redot
+                }
+            }
+            if (isti) {//ako isti(pretpostavkata)e 1->znachi se isti
+                dvojnici[i]++;//kako brojach niza koja gleda kolku redovi se promeneti(duplikati)
+                for (l = 0; l < m; l++) {//ciklus niz kolonite
+                    a[red][l] += dvojnici[i]; // ja zgolemuva vrednosta na el od redot za redniot broj na duplikatot
+                }
+                promeneti++;//brojach koj sodrzhi kolku redovi se promeneti
+            }
+            /*Ред 0: 1 2 3 (za i=0 za prviot red) ------------------------->1 2 3 ->i++------------------------->1 2 3 
+              Ред 1: 4 5 6  red =1; i=0; ->ne se isti --------------------->4 5 6 ->i=1;------------------------>4 5 6
+              Ред 2: 1 2 3 ← дупликат на ред 0  red=2; i=0; dvojnici[0]=1;->2 3 4 ->red=2; i=1; ne se isti------>2 3 4
+              Ред 3: 1 2 3 ← дупликат на ред 0  red=3; i=0; dvojnici[0]=2-->3 4 5 ->red=3; i=1; ne se isti------>3 4 5
+              Ред 4: 4 5 6 ← дупликат на ред 1  red=4; i=0; ne se isti----->4 5 6 ->red=4; i=1; dvojnici[1]=1--->5 6 7
+*/
+        }
+    }
+
+    if (promeneti > 0) {
+        printf("\nBroj na transformirani redovi: %d\n", promeneti);
+        printf("Matrica po transformacija:\n");
+        for (i = 0; i < n; i++) {
+            for (k = 0; k < m; k++) {
+                printf("%d ", a[i][k]);
+            }
+            printf("\n");
+        }
+    } else {
+        printf("Nema dvojnici.\n");
+    }
+
+    return 0;
+}
+/******************************************************************************
+8.	Да се напише програма која ќе дозволи внесување на димензиите на една матрица (од
+тастатура), a потоа (исто така од тастатура) ќе овозможи да се внесуваат елементите на матрицата
+(цели броеви). Програмата треба, за секоја колона од матрицата, да провери дали има дуплкат
+колона т.е. колона со ист редослед и исти вредности на елементите. Доколку најде една (или
+повеќе) такви колони во матрицата, тогаш на првата дупликат колона елементите и се намалуваат
+за вредност 1, на втората дупликат колона (од истата оригинална колона) елементите се
+намалуваат за вредност 2 и т.н. По изминување на матрицата, се печати бројот на колони што
+биле трансформирани и се печати матрицата по трансформацијата. Доколку немало ниту една
+промена, тогаш не се печати новата верзија на матрицата.
+_А=
+_ _ _ _ _
+1 2 1 2 2
+7 2 7 2 2
+1 2 1 2 2
+7 2 7 2 2
+1 2 1 2 2_
+Х = 3
+ по трансформација
+А =
+_ _ _ _ _
+1 2 0 1 0
+7 2 6 1 0
+1 2 0 1 0
+7 2 6 1 0
+1 2 0 1 0_
+
+
+*******************************************************************************/
+#include <stdio.h>
+#define MAX 100
+
+int main() {
+    int a[MAX][MAX], n, m;
+    int i, j, k, l;
+    int dvojnici[MAX] = {0};
+    int promeneti = 0;
+    int isti;
+
+    // Внес на димензии
+    printf("Vnesi broj na redovi: ");
+    scanf("%d", &n);
+    printf("Vnesi broj na koloni: ");
+    scanf("%d", &m);
+
+    // Внес на елементите
+    printf("Vnesi elementi:\n");
+    for (i = 0; i < n; i++) {
+        for (k = 0; k < m; k++) {
+            scanf("%d", &a[i][k]);
+        }
+    }
+
+    // Проверка за дупликат колони
+    for (j = 0; j < m - 1; j++) { 
+        for (k = j + 1; k < m; k++) {
+            isti = 1;
+            for (i = 0; i < n; i++) {
+                if (a[i][j] != a[i][k]) {
+                    isti = 0;
+                    break;
+                }
+            }
+            if (isti) {
+                dvojnici[j]++;
+                for (l = 0; l < n; l++) {
+                    a[l][k] -= dvojnici[j]; 
+                }
+                promeneti++;
+            }
+        }
+    }
+
+    if (promeneti > 0) {
+        printf("\nBroj na transformirani koloni: %d\n", promeneti);
+        printf("Matrica po transformacija:\n");
+        for (i = 0; i < n; i++) {
+            for (k = 0; k < m; k++) {
+                printf("%d ", a[i][k]);
+            }
+            printf("\n");
+        }
+    } else {
+        printf("Nema dvojnici.\n");
+    }
+
+    return 0;
+}
