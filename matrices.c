@@ -91,3 +91,65 @@ for (int i=0; i<rows; i++) {
         newMat[i][j] = mat[i][j];
     }
 }
+//Некои движења и примери кои можат да се паднат на испит
+//1. Поместување на елементите на една матрица една позиција кон десно
+pom=a[n-1][m-1];
+    for (k=n*m-1; k>0; k--){
+        a[k/m][k%m]=a[(k-1)/m][(k-1)%m];
+    }
+a[0][0]=pom;
+//2.Сумата на елементите лево до споредната дијагонала да е еднаква на елементот од споредната дијагонала
+proverka=1; //pretpostavuvame deka e ednakva
+for (i=0; i<n-1; i++){
+suma =0;
+    for (j=0; j+i<n-1; j++){
+        suma+=a[i][j];
+    }
+    if (suma!=a[i][j]) { //suma!=a[i][j<n-1-i]
+    proverka=0;
+    break;
+    }
+}
+//3. Дали е симетрична?? само квадратна
+//услов a[i][j]=a[j][i] && i!=j
+pretpostavka=1;
+for (i=0; i<n-1; i++){
+    for (j=i+1; j<n; j++){
+        if (a[i][j]!=a[j][i]) {
+        s=0;
+        break;
+        }
+    }
+}
+//4. Огледално пресликување (по хоризонтала)
+for (i=0; i<n/2; i++){
+    for (j=0; j<m; j++){
+    temp=a[i][j];
+    a[i][j]=a[n-1-i][j];
+    a[n-1-i][j]=temp;
+    }
+}
+//5.Дали некој број се повторува во секој ред
+kolku=0;
+for (k=0; k<m; k++){
+    for (i=1; i<n; i++){
+    proverka=0;
+        for (j=0; j<m; j++){
+        if (a[0][k]==a[i][j]){
+        proverka=1;
+        break;
+        }
+        }
+    if (proverka==0){
+    break;
+    }
+    }
+    if (proverka ==1){
+    printf ("Elementot %d go ispolnuva uslovot!", a[0][k]);
+        kolku++;
+    }
+}
+if (kolku==0){
+printf("Nema broj koj se povtoruva vo sekoja kolona");
+}
+
