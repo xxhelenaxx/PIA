@@ -140,3 +140,97 @@ for (i=0; i<m; i++){
 fclose(out_dat);
 return 0; 
 }
+//dat.txt->site zborovi kje gi ispechati vo koi se javuvaat povekje od dve isti bukvi, pritoa, bilo koja bukva treba da se pojavi 3+ pati
+//pri shto ne postoi razlika megju mala i golema bukva, na krajot treba da se otpechati klk takvi zborovi bile pronajdeni
+//zborovite imaat samo bukvi, megjusebno se oddeleni so najmalku 1 specijalen znak, so prazno mesto ili so cifra
+//se smeta deka vo tekstot nema zborovi koi se podolgi od 20 znaka
+//imeto na dat e dadeno od komandna linija
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define max 21
+int proverka (char *word){
+  char *c;
+  int pom;
+    while (*word!=NULL){
+      c=word+1;
+      pom=1;
+      while (*c){//
+        if(tolower(*word)==tolower(*c){
+          pom++;
+        }
+        c++;
+      }
+      if(pom>2){
+        return 1;
+      }
+      word++;
+    }
+  return 0;
+}
+
+int main (int argc, char *argv[]){
+  FILE *f;
+  char zboe[max], c;
+  int brzborovi=0;
+  int in_word=0;//pretpostavuvame deka ne se naogjame vo zbor
+  if (argc!=2){
+  printf("Imash greshka vo vnesuvanje na dat!");
+  return -1;
+  }
+  if (f=fopen(argv[1], "r")==NULL){
+  printf("Ne mozham da ja otvaram dat!");
+  return -1;
+  }
+  while ((c=fgetc(f))!=EOF){
+    if(isalpha(c)){ //ako c e bukva
+      if(!in_word){
+        in_word=1;
+      }
+      zbor[i++]=c;
+      
+    }else{
+      if(in_word){//sme se naogjale vo zbor
+        zbor[i]='\0';
+        //so ovaa tekst niza moze da prov dali imame povtoruvanja 
+        if (proverka(zbor)){
+          puts(zbor);
+          brzborovi++;
+        }
+        in_word=i=0;
+        zbor[i]='\0';
+      }
+    }
+    
+  }
+printf("Vo fajlot ima %d takvi zborovi!");
+fclose(f);
+return 0;
+}
+
+| Функција    | Тип на I/O      | Влез/Излез | Опис                                                  | Пример                             |
+| ----------- | --------------- | ---------- | ----------------------------------------------------- | ---------------------------------- |
+| `printf()`  | Стандардна      | Излез      | Печати текст или вредности на екран                   | `printf("Broj: %d", x);`           |
+| `scanf()`   | Стандардна      | Влез       | Чита вредности од тастатура со формат                 | `scanf("%d", &x);`                 |
+| `puts()`    | Стандардна      | Излез      | Печати string и нов ред                               | `puts("Zdravo");`                  |
+| `gets()`    | Стандардна      | Влез       | Чита ред од тастатура                                 | `gets(tekst);`                     |
+| `fgets()`   | Стандардна/Фајл | Влез       | Чита ред од фајл или тастатура                        | `fgets(buf, 100, stdin);`          |
+| `putchar()` | Стандардна      | Излез      | Печати еден знак                                      | `putchar('A');`                    |
+| `getchar()` | Стандардна      | Влез       | Чита еден знак од тастатура                           | `char c = getchar();`              |
+| `fgetc()`   | Фајл            | Влез       | Чита еден знак од фајл                                | `char c = fgetc(f);`               |
+| `fputc()`   | Фајл            | Излез      | Запишува еден знак во фајл                            | `fputc('Z', f);`                   |
+| `fgets()`   | Фајл            | Влез       | Чита линија од фајл                                   | `fgets(line, 100, f);`             |
+| `fputs()`   | Фајл            | Излез      | Запишува string во фајл                               | `fputs("Test", f);`                |
+| `fscanf()`  | Фајл            | Влез       | Чита од фајл со формат (`%d`, `%s`, ...)              | `fscanf(f, "%d", &broj);`          |
+| `fprintf()` | Фајл            | Излез      | Запишува во фајл со формат                            | `fprintf(f, "Broj: %d", x);`       |
+| `fopen()`   | Фајл            | -          | Отвора фајл                                           | `FILE *f = fopen("ime.txt", "r");` |
+| `fclose()`  | Фајл            | -          | Го затвора фајлот                                     | `fclose(f);`                       |
+| `feof()`    | Фајл            | -          | Проверува дали е крај на фајл                         | `while (!feof(f)) { ... }`         |
+| `rewind()`  | Фајл            | -          | Се враќа на почеток на фајлот                         | `rewind(f);`                       |
+| `fseek()`   | Фајл            | -          | Оди на точно одредена позиција во фајлот              | `fseek(f, 0, SEEK_END);`           |
+| `ftell()`   | Фајл            | -          | Дава моментална позиција во фајлот                    | `long pos = ftell(f);`             |
+| `remove()`  | Фајл            | -          | Брише датотека                                        | `remove("test.txt");`              |
+| `rename()`  | Фајл            | -          | Ја преименува датотеката                              | `rename("old.txt", "new.txt");`    |
+
