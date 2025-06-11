@@ -120,3 +120,23 @@ int main (){
   }
 return 0;
 }
+/*
+Од тастатура (stdin):
+getchar() → чита char
+scanf() → чита int, float, char, string
+fgets() → чита ред (стринг)
+
+ На екран (stdout):
+putchar() → печати char
+printf() → печати int, float, char, string
+puts() → печати цел стринг со \n
+
+Од датотека (FILE *f):
+fgetc(f) / getc(f) → чита char
+fscanf(f, ...) → чита int, float, string, итн.
+fgets(str, n, f) → чита ред од текст
+
+ Во датотека:
+fputc(c, f) / putc(c, f) → пишува char
+fprintf(f, ...) → пишува секакви типови
+fputs(str, f) → пишува стринг*/
